@@ -75,24 +75,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Hover effect for the bottle image to follow cursor slightly
-    const productImg = document.querySelector('.product-img');
-    const heroImage = document.querySelector('.hero-image');
-
-    if (heroImage && productImg) {
-        heroImage.addEventListener('mousemove', (e) => {
-            const { left, top, width, height } = heroImage.getBoundingClientRect();
-            const x = (e.clientX - left) / width - 0.5;
-            const y = (e.clientY - top) / height - 0.5;
-            
-            productImg.style.transform = `translate(${x * 30}px, ${y * 30}px) rotate(${x * 5}deg)`;
-        });
-
-        heroImage.addEventListener('mouseleave', () => {
-            productImg.style.transform = `translate(0, 0) rotate(0)`;
-        });
-    }
-
     // Search button log
     const searchBtn = document.querySelector('.search-btn');
     if (searchBtn) {
