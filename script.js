@@ -1,56 +1,43 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Mobile Menu Toggle (Simplified version)
-    const createMobileMenu = () => {
-        const header = document.querySelector('.header');
+    // Mobile Menu Toggle
+    const initMobileMenu = () => {
+        const toggle = document.querySelector('.mobile-menu-toggle');
         const nav = document.querySelector('.nav');
+        const toggleIcon = toggle.querySelector('i');
         
-        // Add hamburger button to header if it doesn't exist
-        if (window.innerWidth <= 768 && !document.querySelector('.mobile-toggle')) {
-            const toggle = document.createElement('button');
-            toggle.className = 'mobile-toggle';
-            toggle.innerHTML = `
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <line x1="3" y1="12" x2="21" y2="12"></line>
-                    <line x1="3" y1="6" x2="21" y2="6"></line>
-                    <line x1="3" y1="18" x2="21" y2="18"></line>
-                </svg>
-            `;
-            toggle.style.cssText = `
-                background: none;
-                border: none;
-                color: #064e3b;
-                cursor: pointer;
-                display: block;
-                padding: 0.5rem;
-            `;
-            
+        if (toggle && nav) {
             toggle.addEventListener('click', () => {
                 nav.classList.toggle('active');
-                if (nav.classList.contains('active')) {
-                    nav.style.display = 'block';
-                    nav.style.position = 'absolute';
-                    nav.style.top = '100%';
-                    nav.style.left = '0';
-                    nav.style.width = '100%';
-                    nav.style.backgroundColor = 'white';
-                    nav.style.padding = '1rem 0';
-                    nav.style.boxShadow = '0 10px 15px -3px rgba(0, 0, 0, 0.1)';
-                    const navList = nav.querySelector('.nav-list');
-                    navList.style.flexDirection = 'column';
-                    navList.style.gap = '1rem';
-                    navList.style.alignItems = 'center';
+                
+                // Toggle between menu and x icon
+                const isOpened = nav.classList.contains('active');
+                if (isOpened) {
+                    toggleIcon.setAttribute('data-lucide', 'x');
                 } else {
-                    nav.style.display = 'none';
+                    toggleIcon.setAttribute('data-lucide', 'menu');
+                }
+                
+                // Refresh Lucide Icons
+                if (typeof lucide !== 'undefined') {
+                    lucide.createIcons();
                 }
             });
-            
-            header.querySelector('.nav-wrapper').insertBefore(toggle, nav);
+
+            // Close menu when clicking a link
+            nav.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', () => {
+                    nav.classList.remove('active');
+                    toggleIcon.setAttribute('data-lucide', 'menu');
+                    if (typeof lucide !== 'undefined') {
+                        lucide.createIcons();
+                    }
+                });
+            });
         }
     };
 
     // Initialize mobile menu
-    createMobileMenu();
-    window.addEventListener('resize', createMobileMenu);
+    initMobileMenu();
 
     // Smooth Scrolling
     document.querySelectorAll('.nav-link').forEach(link => {
@@ -85,49 +72,111 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Product Details Logic
     const initProductDetails = () => {
-        // Gallery Thumbnail Logic
-        const thumbnails = document.querySelectorAll('.thumbnail');
-        const mainImage = document.getElementById('main-product-image');
-        
-        thumbnails.forEach(thumb => {
-            thumb.addEventListener('click', () => {
+        // Gallery Logic
+        const initGallery = () => {
+            const mainImage = document.getElementById('main-product-image');
+            const thumbnails = document.querySelectorAll('.thumbnail');
+            const dots = document.querySelectorAll('.dot');
+            const prevBtn = document.querySelector('.gallery-nav.prev');
+            const nextBtn = document.querySelector('.gallery-nav.next');
+            
+            if (!mainImage || thumbnails.length === 0) return;
+
+            let currentIndex = 0;
+            const images = Array.from(thumbnails).map(thumb => {
                 const img = thumb.querySelector('img');
-                if (img && mainImage) {
-                    mainImage.src = img.src;
-                    mainImage.alt = img.alt;
-                    
-                    // Update active state
-                    thumbnails.forEach(t => t.classList.remove('active'));
-                    thumb.classList.add('active');
-                }
+                return {
+                    src: img ? img.src : '',
+                    alt: img ? img.alt : ''
+                };
             });
-        });
+            const totalImages = images.length;
+
+            const updateGallery = (index) => {
+                // Fade out effect
+                mainImage.style.opacity = '0';
+                
+                setTimeout(() => {
+                    currentIndex = index;
+                    mainImage.src = images[currentIndex].src;
+                    mainImage.alt = images[currentIndex].alt;
+                    
+                    // Update active states
+                    thumbnails.forEach((thumb, i) => {
+                        thumb.classList.toggle('active', i === currentIndex);
+                    });
+
+                    dots.forEach((dot, i) => {
+                        dot.classList.toggle('active', i === currentIndex);
+                    });
+
+                    // Fade in effect
+                    mainImage.style.opacity = '1';
+                }, 300);
+            };
+
+            // Thumbnail clicks
+            thumbnails.forEach((thumb, index) => {
+                thumb.addEventListener('click', () => {
+                    if (index !== currentIndex) updateGallery(index);
+                });
+            });
+
+            // Dot clicks
+            dots.forEach((dot, index) => {
+                dot.addEventListener('click', () => {
+                    if (index !== currentIndex) updateGallery(index);
+                });
+            });
+
+            // Arrow clicks
+            if (prevBtn) {
+                prevBtn.addEventListener('click', () => {
+                    let newIndex = currentIndex - 1;
+                    if (newIndex < 0) newIndex = totalImages - 1;
+                    updateGallery(newIndex);
+                });
+            }
+
+            if (nextBtn) {
+                nextBtn.addEventListener('click', () => {
+                    let newIndex = currentIndex + 1;
+                    if (newIndex >= totalImages) newIndex = 0;
+                    updateGallery(newIndex);
+                });
+            }
+        };
+
+        initGallery();
 
         // Fragrance Selector Logic
         const subscriptionOptionsForFragrance = document.querySelectorAll('.subscription-option');
         
         const fragImages = {
-            'original': 'Public/PerfumePurple.png',
-            'lily': 'Public/PerfumeLily.png',
+            'original': 'Public/PerfumeOriginal.png',
+            'lily': 'Public/PerfumeLily2.png',
             'rose': 'Public/PerfumeRose.png'
         };
 
         subscriptionOptionsForFragrance.forEach(subOption => {
             const fragranceCards = subOption.querySelectorAll('.fragrance-card');
             const inclusionImg = subOption.querySelector('.inclusion-img img');
+            const mainImage = document.getElementById('main-product-image');
             
             fragranceCards.forEach(card => {
                 card.addEventListener('click', (e) => {
-                    e.stopPropagation(); // Prevent triggering the subscription toggle click
+                    e.stopPropagation();
                     const frag = card.dataset.fragrance;
                     
-                    // Update active fragrance card within THIS sub option
                     fragranceCards.forEach(c => c.classList.remove('active'));
                     card.classList.add('active');
                     
-                    // Update main gallery image and inclusion preview for THIS sub option
                     if (mainImage && fragImages[frag]) {
-                        mainImage.src = fragImages[frag];
+                        mainImage.style.opacity = '0';
+                        setTimeout(() => {
+                            mainImage.src = fragImages[frag];
+                            mainImage.style.opacity = '1';
+                        }, 300);
                         if (inclusionImg) inclusionImg.src = fragImages[frag];
                     }
                 });
