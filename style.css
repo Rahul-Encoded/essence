@@ -924,6 +924,63 @@ img {
     object-fit: cover;
 }
 
+/* Metrics Section */
+.metrics-section {
+    padding: 4rem 0;
+    background: linear-gradient(180deg, #022c12 0%, #064e3b 100%);
+    color: var(--white);
+    text-align: center;
+    margin-top: 8rem;
+}
+
+.metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 3rem;
+}
+
+.metric-number {
+    font-family: var(--font-heading);
+    font-size: 4rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    line-height: 1;
+}
+
+.metric-text {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    opacity: 0.8;
+}
+
+@media (max-width: 1024px) {
+    .metrics-grid {
+        gap: 2rem;
+    }
+    
+    .metric-number {
+        font-size: 3rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .metrics-section {
+        padding: 4rem 0;
+    }
+    
+    .metrics-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .metrics-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+}
+
 @media (max-width: 992px) {
     .collection-grid {
         gap: 2rem;
