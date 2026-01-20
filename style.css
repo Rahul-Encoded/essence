@@ -310,3 +310,450 @@ img {
         gap: 1.5rem;
     }
 }
+
+/* Product Details Section */
+.product-details {
+    padding: 5rem 0;
+    background-color: var(--white);
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 4rem;
+    align-items: start;
+}
+
+/* Gallery Styles */
+.product-gallery {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.main-image-container {
+    position: relative;
+    background: #e5e7e6; /* Matches the soft grey in design */
+    border-radius: 20px;
+    padding: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    aspect-ratio: 1/1;
+    overflow: hidden;
+}
+
+.main-product-img {
+    height: auto;
+    width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    mix-blend-mode: multiply; /* Helps blend product images with colored bgs */
+}
+
+.gallery-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: 1px solid #4b5563;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 5;
+    transition: var(--transition);
+    color: #4b5563;
+}
+
+.gallery-nav:hover {
+    background: rgba(0, 0, 0, 0.05);
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}
+
+.gallery-nav.prev { left: 1.5rem; }
+.gallery-nav.next { right: 1.5rem; }
+
+.pagination-dots {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 0.8rem;
+    align-items: center;
+}
+
+.dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    border: 1px solid #4b5563;
+    background: transparent;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.dot.active {
+    background: #064e3b;
+    border-color: #064e3b;
+    width: 10px;
+    height: 10px;
+}
+
+.thumbnail-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+}
+
+.thumbnail {
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: var(--transition);
+    aspect-ratio: 1/1;
+}
+
+.thumbnail.active {
+    border-color: var(--primary-color);
+}
+
+.thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Info Section Content */
+.product-brand {
+    font-size: 2.5rem;
+    font-family: var(--font-heading);
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+}
+
+.product-rating {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin-bottom: 1.5rem;
+}
+
+.stars {
+    display: flex;
+    gap: 2px;
+}
+
+.rating-text {
+    font-size: 0.9rem;
+    color: var(--text-light);
+}
+
+.product-description {
+    color: var(--text-light);
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 2.5rem;
+}
+
+/* Subscription Card */
+.subscription-card {
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.subscription-card.most-popular {
+    border-color: var(--primary-color);
+}
+
+.popular-badge {
+    background: var(--primary-color);
+    color: var(--white);
+    text-align: center;
+    padding: 0.6rem;
+    font-weight: 700;
+    font-size: 1rem;
+}
+
+.subscription-option {
+    padding: 1.5rem;
+}
+
+.subscription-option.active {
+    background: var(--white);
+}
+
+.option-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+/* Radio Button Styling */
+.radio-container {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    cursor: pointer;
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: var(--text-light);
+}
+
+.radio-container input {
+    display: none;
+}
+
+.checkmark {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #d1d5db;
+    border-radius: 50%;
+    position: relative;
+}
+
+.radio-container input:checked ~ .checkmark {
+    border-color: var(--primary-color);
+}
+
+.radio-container input:checked ~ .checkmark::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 10px;
+    height: 10px;
+    background: var(--primary-color);
+    border-radius: 50%;
+}
+
+.pricing {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.current-price {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--text-color);
+}
+
+.old-price {
+    color: #9ca3af;
+    text-decoration: line-through;
+    font-size: 1.1rem;
+}
+
+/* Option Details */
+.option-details {
+    border-top: 1px solid #f3f4f6;
+    padding-top: 1.5rem;
+}
+
+.selector-section {
+    margin-bottom: 2rem;
+}
+
+.selector-title {
+    font-size: 0.95rem;
+    color: var(--text-light);
+    margin-bottom: 1rem;
+    font-weight: 500;
+}
+
+.fragrance-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+}
+
+.fragrance-card {
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+    transition: var(--transition);
+}
+
+.fragrance-card.active {
+    border-color: var(--primary-color);
+    background: #f0fdf4;
+}
+
+.best-seller-badge {
+    position: absolute;
+    top: -8px;
+    background: var(--primary-color);
+    color: var(--white);
+    font-size: 0.6rem;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-weight: 800;
+}
+
+.frag-img-wrapper {
+    height: 60px;
+    margin-bottom: 0.5rem;
+}
+
+.frag-img-wrapper img {
+    height: 100%;
+    object-fit: contain;
+}
+
+.frag-name {
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+/* Inclusion Grid */
+.inclusion-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.inclusion-card {
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    height: 151px;
+    justify-content: space-between;
+    transition: var(--transition);
+}
+
+.inclusion-card.active {
+    border-color: var(--primary-color);
+    box-shadow: 0 4px 12px rgba(6, 78, 59, 0.1);
+}
+
+.inclusion-label {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    line-height: 1.2;
+}
+
+.inclusion-img {
+    height: 80px;
+    display: flex;
+    justify-content: center;
+}
+
+.inclusion-img img {
+    height: 100%;
+}
+
+.inclusion-images-stack {
+    display: flex;
+    justify-content: center;
+    height: 60px;
+    gap: -10px;
+}
+
+.inclusion-images-stack img {
+    width: 40px;
+    object-fit: contain;
+    margin: 0 -5px;
+}
+
+/* Features List */
+.features-list {
+    margin: 2rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.features-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.8rem;
+    font-size: 0.9rem;
+    color: var(--text-light);
+}
+
+.features-list svg {
+    margin-top: 2px;
+    flex-shrink: 0;
+}
+
+/* Actions */
+.btn-add-to-cart {
+    width: calc(100% - 3rem);
+    margin: 0 1.5rem 1.5rem;
+    padding: 1.2rem;
+    background: var(--primary-color);
+    color: var(--white);
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 1.1rem;
+    border: none;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn-add-to-cart:hover {
+    background: var(--primary-hover);
+    transform: translateY(-2px);
+}
+
+.subscription-option.secondary {
+    border-top: 1px solid #f3f4f6;
+    background: #f9fafb;
+    opacity: 0.8;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+    .product-grid {
+        gap: 2rem;
+    }
+    
+    .product-brand {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .product-grid {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+    }
+    
+    .product-details {
+        padding: 3rem 0;
+    }
+    
+    .thumbnail-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .fragrance-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+    
+    .inclusion-grid {
+        grid-template-columns: 1fr;
+    }
+}
