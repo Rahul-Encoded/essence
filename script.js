@@ -82,4 +82,112 @@ document.addEventListener('DOMContentLoaded', () => {
             alert('Search functionality coming soon!');
         });
     }
+
+    // Product Details Logic
+    const initProductDetails = () => {
+        // Gallery Thumbnail Logic
+        const thumbnails = document.querySelectorAll('.thumbnail');
+        const mainImage = document.getElementById('main-product-image');
+        
+        thumbnails.forEach(thumb => {
+            thumb.addEventListener('click', () => {
+                const img = thumb.querySelector('img');
+                if (img && mainImage) {
+                    mainImage.src = img.src;
+                    mainImage.alt = img.alt;
+                    
+                    // Update active state
+                    thumbnails.forEach(t => t.classList.remove('active'));
+                    thumb.classList.add('active');
+                }
+            });
+        });
+
+        // Fragrance Selector Logic
+        const subscriptionOptionsForFragrance = document.querySelectorAll('.subscription-option');
+        
+        const fragImages = {
+            'original': 'Public/PerfumePurple.png',
+            'lily': 'Public/PerfumeLily.png',
+            'rose': 'Public/PerfumeRose.png'
+        };
+
+        subscriptionOptionsForFragrance.forEach(subOption => {
+            const fragranceCards = subOption.querySelectorAll('.fragrance-card');
+            const inclusionImg = subOption.querySelector('.inclusion-img img');
+            
+            fragranceCards.forEach(card => {
+                card.addEventListener('click', (e) => {
+                    e.stopPropagation(); // Prevent triggering the subscription toggle click
+                    const frag = card.dataset.fragrance;
+                    
+                    // Update active fragrance card within THIS sub option
+                    fragranceCards.forEach(c => c.classList.remove('active'));
+                    card.classList.add('active');
+                    
+                    // Update main gallery image and inclusion preview for THIS sub option
+                    if (mainImage && fragImages[frag]) {
+                        mainImage.src = fragImages[frag];
+                        if (inclusionImg) inclusionImg.src = fragImages[frag];
+                    }
+                });
+            });
+
+            // Inclusions Toggle within THIS sub option
+            const inclusionCards = subOption.querySelectorAll('.inclusion-card');
+            inclusionCards.forEach(card => {
+                card.addEventListener('click', (e) => {
+                    e.stopPropagation(); // Prevent triggering the subscription toggle click
+                    inclusionCards.forEach(c => c.classList.remove('active'));
+                    card.classList.add('active');
+                });
+            });
+        });
+
+        // Subscription Toggle Logic
+        const subscriptionOptions = document.querySelectorAll('.subscription-option');
+
+        subscriptionOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                const radio = option.querySelector('input[name="subscription-type"]');
+                if (radio) {
+                    radio.checked = true;
+                    // Trigger change manually since we're setting checked property
+                    radio.dispatchEvent(new Event('change'));
+                }
+            });
+        });
+
+        const subRadios = document.querySelectorAll('input[name="subscription-type"]');
+        const singleSub = document.getElementById('single-sub');
+        const doubleSub = document.getElementById('double-sub');
+
+        subRadios.forEach(radio => {
+            radio.addEventListener('change', (e) => {
+                if (e.target.value === 'single') {
+                    singleSub.classList.add('active');
+                    doubleSub.classList.remove('active');
+                } else {
+                    doubleSub.classList.add('active');
+                    singleSub.classList.remove('active');
+                }
+            });
+        });
+
+        // Inclusions Toggle
+        const inclusionCards = document.querySelectorAll('.inclusion-card');
+        inclusionCards.forEach(card => {
+            card.addEventListener('click', () => {
+                inclusionCards.forEach(c => c.classList.remove('active'));
+                card.classList.add('active');
+            });
+        });
+    };
+
+    initProductDetails();
+
+    // Initialize Lucide Icons
+    if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+    }
 });
