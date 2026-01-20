@@ -188,6 +188,43 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
+    // Collection Accordion Logic
+    const initCollectionAccordion = () => {
+        const accordionItems = document.querySelectorAll('.accordion-item');
+        
+        accordionItems.forEach(item => {
+            const header = item.querySelector('.accordion-header');
+            
+            header.addEventListener('click', () => {
+                const isActive = item.classList.contains('active');
+                
+                // Close all items
+                accordionItems.forEach(i => {
+                    i.classList.remove('active');
+                    const icon = i.querySelector('[data-lucide]');
+                    if (icon) {
+                        icon.setAttribute('data-lucide', 'plus');
+                    }
+                });
+                
+                // If the clicked item wasn't active, open it
+                if (!isActive) {
+                    item.classList.add('active');
+                    const icon = item.querySelector('[data-lucide]');
+                    if (icon) {
+                        icon.setAttribute('data-lucide', 'minus');
+                    }
+                }
+                
+                // Update icons
+                if (typeof lucide !== 'undefined') {
+                    lucide.createIcons();
+                }
+            });
+        });
+    };
+
+    initCollectionAccordion();
     initProductDetails();
 
     // Initialize Lucide Icons
