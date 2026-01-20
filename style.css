@@ -604,51 +604,91 @@ img {
 .fragrance-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 1rem;
+    gap: 1.5rem;
 }
 
 .fragrance-card {
-    background: #f9fafb;
-    border: 1px solid #e5e7eb;
-    border-radius: 8px;
-    padding: 1rem;
+    background: #f7f9f8;
+    border: 1px solid transparent;
+    border-radius: 12px;
+    padding: 1.5rem;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: stretch;
     cursor: pointer;
     position: relative;
     transition: var(--transition);
+    min-height: 220px;
 }
 
 .fragrance-card.active {
-    border-color: var(--primary-color);
-    background: #f0fdf4;
+    background: #f7f9f8;
+    border-color: transparent;
+}
+
+.fragrance-card-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.selection-indicator {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #58786C;
+    border-radius: 50%;
+    position: relative;
+    flex-shrink: 0;
+}
+
+.fragrance-card.active .selection-indicator::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 10px;
+    height: 10px;
+    background: #58786C;
+    border-radius: 50%;
 }
 
 .best-seller-badge {
     position: absolute;
-    top: -8px;
-    background: var(--primary-color);
+    top: -10px;
+    right: -1px;
+    background: #024a2f;
     color: var(--white);
-    font-size: 0.6rem;
-    padding: 2px 6px;
-    border-radius: 4px;
+    font-size: 0.75rem;
+    padding: 1px 6px;
+    border-radius: 8px 0px 8px 0px;
     font-weight: 800;
+    letter-spacing: 0.02em;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    z-index: 10;
 }
 
 .frag-img-wrapper {
-    height: 60px;
-    margin-bottom: 0.5rem;
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 0.5rem;
 }
 
 .frag-img-wrapper img {
-    height: 100%;
+    height: 110px;
+    width: auto;
     object-fit: contain;
 }
 
 .frag-name {
-    font-size: 0.85rem;
-    font-weight: 500;
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: #58786C;
+    line-height: 1;
 }
 
 /* Inclusion Grid */
