@@ -375,10 +375,33 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
+    // Lazy Loading Logic
+    const initLazyLoading = () => {
+        const lazyImages = document.querySelectorAll('.lazy-img');
+        
+        const loadImage = (img) => {
+            if (img.complete) {
+                img.classList.add('loaded');
+            } else {
+                img.addEventListener('load', () => {
+                    img.classList.add('loaded');
+                }, { once: true });
+                
+                // Handle potential error
+                img.addEventListener('error', () => {
+                    img.style.opacity = '1'; // Show anyway if error
+                }, { once: true });
+            }
+        };
+
+        lazyImages.forEach(loadImage);
+    };
+
     initCollectionAccordion();
     initProductDetails();
     initNewsletterForm();
     initMetricsAnimation();
+    initLazyLoading();
 
     // Initialize Lucide Icons
     if (typeof lucide !== 'undefined') {
