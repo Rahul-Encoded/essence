@@ -167,9 +167,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (e.target.value === 'single') {
                     singleSub.classList.add('active');
                     doubleSub.classList.remove('active');
+                    singleSub.closest('.subscription-card').classList.add('active');
+                    doubleSub.closest('.subscription-card').classList.remove('active');
                 } else {
                     doubleSub.classList.add('active');
                     singleSub.classList.remove('active');
+                    doubleSub.closest('.subscription-card').classList.add('active');
+                    singleSub.closest('.subscription-card').classList.remove('active');
                 }
             });
         });
