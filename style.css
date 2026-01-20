@@ -514,7 +514,7 @@ img {
 }
 
 .subscription-option {
-    padding: 1.5rem;
+    padding: 1rem;
     cursor: pointer;
     transition: var(--transition);
 }
@@ -548,7 +548,7 @@ img {
     align-items: center;
     gap: 1rem;
     cursor: pointer;
-    font-size: 1.25rem;
+    font-size: 1.1rem;
     font-weight: 500;
     color: var(--text-light);
 }
@@ -588,7 +588,7 @@ img {
 }
 
 .current-price {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     font-weight: 800;
     color: var(--text-color);
 }
@@ -596,44 +596,44 @@ img {
 .old-price {
     color: #9ca3af;
     text-decoration: line-through;
-    font-size: 1.1rem;
+    font-size: 1rem;
 }
 
 /* Option Details */
 .option-details {
     border-top: 1px solid #f3f4f6;
-    padding-top: 1.5rem;
+    padding-top: 0.8rem;
 }
 
 .selector-section {
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
 }
 
 .selector-title {
-    font-size: 1.25rem;
+    font-size: 0.95rem;
     color: var(--primary-color);
-    margin-bottom: 1.5rem;
-    font-weight: 500;
+    margin-bottom: 0.6rem;
+    font-weight: 100;
 }
 
 .fragrance-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
+    gap: 0.6rem;
 }
 
 .fragrance-card {
     background: #f7f9f8;
     border: 1px solid transparent;
     border-radius: 12px;
-    padding: 1.5rem;
+    padding: 0.6rem 0.8rem;
     display: flex;
     flex-direction: column;
     align-items: stretch;
     cursor: pointer;
     position: relative;
     transition: var(--transition);
-    min-height: 220px;
+    min-height: 140px;
 }
 
 .fragrance-card.active {
@@ -644,8 +644,8 @@ img {
 .fragrance-card-header {
     display: flex;
     align-items: center;
-    gap: 1rem;
-    margin-bottom: 1rem;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
 }
 
 .selection-indicator {
@@ -675,7 +675,7 @@ img {
     right: -1px;
     background: linear-gradient(180deg, #032e15 0%, #016630 100%);
     color: var(--white);
-    font-size: 0.75rem;
+    font-size: 0.5rem;
     padding: 1px 6px;
     border-radius: 8px 0px 8px 0px;
     font-weight: 800;
@@ -693,33 +693,37 @@ img {
 }
 
 .frag-img-wrapper img {
-    height: 110px;
+    height: 70px;
     width: auto;
     object-fit: contain;
 }
 
 .frag-name {
     font-family: var(--font-heading);
-    font-size: 1.5rem;
+    font-size: 1rem;
     font-weight: 400;
-    color: #58786C;
+    color: #919798;
     line-height: 1;
+}
+
+.fragrance-card.active .frag-name {
+    color: #58786C;
 }
 
 /* Inclusion Grid */
 .inclusion-grid {
     display: grid;
     grid-template-columns: 1fr 2fr;
-    gap: 1rem;
+    gap: 0.5rem;
 }
 
 .inclusion-card {
     border: 1px solid #9ca3af;
     border-radius: 8px;
-    padding: 1.25rem;
+    padding: 0.6rem 0.8rem;
     display: flex;
     flex-direction: column;
-    height: 240px;
+    height: 180px;
     transition: var(--transition);
 }
 
@@ -731,7 +735,7 @@ img {
     font-size: 0.9rem;
     color: #919798;
     line-height: 1.2;
-    margin-bottom: 1rem;
+    margin-bottom: 0.4rem;
 }
 
 .inclusion-label strong {
@@ -747,7 +751,7 @@ img {
 }
 
 .inclusion-img img {
-    max-height: 140px;
+    max-height: 100px;
     width: auto;
 }
 
@@ -759,23 +763,23 @@ img {
 }
 
 .inclusion-images-stack img {
-    max-height: 110px;
+    max-height: 70px;
     width: auto;
 }
 
 /* Features List */
 .features-list {
-    margin: 2rem 0;
+    margin: 1rem 0;
     display: flex;
     flex-direction: column;
-    gap: 0.8rem;
+    gap: 0.4rem;
 }
 
 .features-list li {
     display: flex;
     align-items: flex-start;
     gap: 0.8rem;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     color: var(--text-light);
 }
 
@@ -788,7 +792,7 @@ img {
 .btn-add-to-cart {
     width: calc(100% - 3rem);
     margin: 0 1.5rem 1.5rem;
-    padding: 1.2rem;
+    padding: 1rem;
     background: linear-gradient(180deg, #032e15 0%, #016630 100%);
     color: var(--white);
     border-radius: 50px;
