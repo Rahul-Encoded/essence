@@ -149,92 +149,141 @@ document.addEventListener('DOMContentLoaded', () => {
 
         initGallery();
 
-        // Fragrance Selector Logic
-        const subscriptionOptionsForFragrance = document.querySelectorAll('.subscription-option');
-        
-        const fragImages = {
-            'original': 'Public/PerfumeOriginal.png',
-            'lily': 'Public/PerfumeLily2.png',
-            'rose': 'Public/PerfumeRose.png'
-        };
-
-        subscriptionOptionsForFragrance.forEach(subOption => {
-            const fragranceCards = subOption.querySelectorAll('.fragrance-card');
-            const inclusionImg = subOption.querySelector('.inclusion-img img');
-            const mainImage = document.getElementById('main-product-image');
+        // Subscription & Cart Logic
+        const initSubscription = () => {
+            const addToCartBtn = document.querySelector('.btn-add-to-cart');
+            const subOptions = document.querySelectorAll('.subscription-option');
+            const subRadios = document.querySelectorAll('input[name="subscription-type"]');
             
-            fragranceCards.forEach(card => {
-                card.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    const frag = card.dataset.fragrance;
-                    
-                    fragranceCards.forEach(c => c.classList.remove('active'));
-                    card.classList.add('active');
-                    
-                    if (mainImage && fragImages[frag]) {
-                        mainImage.style.opacity = '0';
-                        setTimeout(() => {
-                            mainImage.src = fragImages[frag];
-                            mainImage.style.opacity = '1';
-                        }, 300);
-                        if (inclusionImg) inclusionImg.src = fragImages[frag];
+            let cartState = {
+                type: 'single',
+                price: '$99.99',
+                fragrance: 'original',
+                inclusion: '30-days'
+            };
+
+            const updateAddToCart = () => {
+                if (!addToCartBtn) return;
+                
+                // Construct a dynamic link or just update text
+                // For this demo, we'll update the text and log selection
+                addToCartBtn.textContent = `Add to Cart - ${cartState.price}`;
+                
+                // In a real app, you'd update an href like:
+                // addToCartBtn.href = `/cart/add?type=${cartState.type}&fragrance=${cartState.fragrance}&inclusion=${cartState.inclusion}`;
+            };
+
+            const refreshState = () => {
+                const activeSub = document.querySelector('.subscription-option.active');
+                if (!activeSub) return;
+
+                cartState.type = activeSub.id.replace('-sub', '');
+                cartState.price = activeSub.querySelector('.current-price').textContent;
+                
+                const activeFrag = activeSub.querySelector('.fragrance-card.active');
+                if (activeFrag) {
+                    cartState.fragrance = activeFrag.dataset.fragrance;
+                }
+
+                const activeInclusion = activeSub.querySelector('.inclusion-card.active');
+                if (activeInclusion) {
+                    const label = activeInclusion.querySelector('.inclusion-label');
+                    cartState.inclusion = label ? label.textContent.trim() : 'standard';
+                }
+
+                updateAddToCart();
+            };
+
+            // Main Subscription Toggle (Single vs Double)
+            subOptions.forEach(option => {
+                option.addEventListener('click', () => {
+                    const radio = option.querySelector('input[name="subscription-type"]');
+                    if (radio) {
+                        radio.checked = true;
+                        radio.dispatchEvent(new Event('change', { bubbles: true }));
                     }
                 });
             });
 
-            // Inclusions Toggle within THIS sub option
-            const inclusionCards = subOption.querySelectorAll('.inclusion-card');
-            inclusionCards.forEach(card => {
-                card.addEventListener('click', (e) => {
-                    e.stopPropagation(); // Prevent triggering the subscription toggle click
-                    inclusionCards.forEach(c => c.classList.remove('active'));
-                    card.classList.add('active');
+            subRadios.forEach(radio => {
+                radio.addEventListener('change', (e) => {
+                    const val = e.target.value;
+                    const singleSub = document.getElementById('single-sub');
+                    const doubleSub = document.getElementById('double-sub');
+
+                    if (val === 'single') {
+                        singleSub.classList.add('active');
+                        doubleSub.classList.remove('active');
+                        singleSub.closest('.subscription-card').classList.add('active');
+                        doubleSub.closest('.subscription-card').classList.remove('active');
+                    } else {
+                        doubleSub.classList.add('active');
+                        singleSub.classList.remove('active');
+                        doubleSub.closest('.subscription-card').classList.add('active');
+                        singleSub.closest('.subscription-card').classList.remove('active');
+                    }
+                    refreshState();
                 });
             });
-        });
 
-        // Subscription Toggle Logic
-        const subscriptionOptions = document.querySelectorAll('.subscription-option');
+            // Fragrance Selection
+            const fragImages = {
+                'original': 'Public/PerfumeOriginal.png',
+                'lily': 'Public/PerfumeLily2.png',
+                'rose': 'Public/PerfumeRose.png'
+            };
 
-        subscriptionOptions.forEach(option => {
-            option.addEventListener('click', () => {
-                const radio = option.querySelector('input[name="subscription-type"]');
-                if (radio) {
-                    radio.checked = true;
-                    // Trigger change manually since we're setting checked property
-                    radio.dispatchEvent(new Event('change'));
-                }
+            subOptions.forEach(subOption => {
+                const fragranceCards = subOption.querySelectorAll('.fragrance-card');
+                const inclusionImg = subOption.querySelector('.inclusion-img img');
+                const mainImage = document.getElementById('main-product-image');
+                
+                fragranceCards.forEach(card => {
+                    card.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        const frag = card.dataset.fragrance;
+                        
+                        fragranceCards.forEach(c => c.classList.remove('active'));
+                        card.classList.add('active');
+                        
+                        // Update UI
+                        if (mainImage && fragImages[frag]) {
+                            mainImage.style.opacity = '0';
+                            setTimeout(() => {
+                                mainImage.src = fragImages[frag];
+                                mainImage.style.opacity = '1';
+                            }, 300);
+                            if (inclusionImg) inclusionImg.src = fragImages[frag];
+                        }
+                        refreshState();
+                    });
+                });
+
+                // Inclusions selection
+                const inclusionCards = subOption.querySelectorAll('.inclusion-card');
+                inclusionCards.forEach(card => {
+                    card.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        inclusionCards.forEach(c => c.classList.remove('active'));
+                        card.classList.add('active');
+                        refreshState();
+                    });
+                });
             });
-        });
 
-        const subRadios = document.querySelectorAll('input[name="subscription-type"]');
-        const singleSub = document.getElementById('single-sub');
-        const doubleSub = document.getElementById('double-sub');
+            // Init state
+            refreshState();
+            
+            // Add to Cart Click log
+            if (addToCartBtn) {
+                addToCartBtn.addEventListener('click', () => {
+                    console.log('Cart State:', cartState);
+                    alert(`Added to Cart: ${cartState.type} subscription with ${cartState.fragrance} scent at ${cartState.price}`);
+                });
+            }
+        };
 
-        subRadios.forEach(radio => {
-            radio.addEventListener('change', (e) => {
-                if (e.target.value === 'single') {
-                    singleSub.classList.add('active');
-                    doubleSub.classList.remove('active');
-                    singleSub.closest('.subscription-card').classList.add('active');
-                    doubleSub.closest('.subscription-card').classList.remove('active');
-                } else {
-                    doubleSub.classList.add('active');
-                    singleSub.classList.remove('active');
-                    doubleSub.closest('.subscription-card').classList.add('active');
-                    singleSub.closest('.subscription-card').classList.remove('active');
-                }
-            });
-        });
-
-        // Inclusions Toggle
-        const inclusionCards = document.querySelectorAll('.inclusion-card');
-        inclusionCards.forEach(card => {
-            card.addEventListener('click', () => {
-                inclusionCards.forEach(c => c.classList.remove('active'));
-                card.classList.add('active');
-            });
-        });
+        initSubscription();
     };
 
     // Collection Accordion Logic
@@ -288,9 +337,48 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
+    // Metrics Animation Logic
+    const initMetricsAnimation = () => {
+        const metrics = document.querySelectorAll('.metric-number');
+        
+        const animateValue = (obj, start, end, duration) => {
+            let startTimestamp = null;
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                const value = Math.floor(progress * (end - start) + start);
+                obj.innerHTML = value + '%';
+                if (progress < 1) {
+                    window.requestAnimationFrame(step);
+                }
+            };
+            window.requestAnimationFrame(step);
+        };
+
+        const observerOptions = {
+            threshold: 0.5
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const target = entry.target;
+                    const finalValue = parseInt(target.textContent);
+                    animateValue(target, 0, finalValue, 1500);
+                    observer.unobserve(target); // Only animate once
+                }
+            });
+        }, observerOptions);
+
+        metrics.forEach(metric => {
+            observer.observe(metric);
+        });
+    };
+
     initCollectionAccordion();
     initProductDetails();
     initNewsletterForm();
+    initMetricsAnimation();
 
     // Initialize Lucide Icons
     if (typeof lucide !== 'undefined') {
