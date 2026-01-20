@@ -1298,16 +1298,25 @@ img {
 .gtg-column-header, .gtg-cell {
     position: relative;
     background-color: #f0fdf4; /* Pale Mint Green */
+    box-shadow: 10px 0 15px -10px rgba(0, 0, 0, 0.05), -10px 0 15px -10px rgba(0, 0, 0, 0.05);
 }
 
 .gtg-cell {
     font-weight: 700;
-    color: var(--primary-color) !important; /* Force visibility for GTG */
+    color: var(--primary-color) !important;
 }
 
 .gtg-column-header {
     border-radius: 40px 40px 0 0;
     padding: 2.5rem 1rem !important;
+    box-shadow: 10px -10px 15px -10px rgba(0, 0, 0, 0.05), -10px -10px 15px -10px rgba(0, 0, 0, 0.05);
+}
+
+/* Add a subtle bottom rounding to the last gtg cells if possible, 
+   but since it's a table column, we'll just ensure the last row border is clean */
+.comparison-table tr:last-child .gtg-cell {
+    border-radius: 0 0 40px 40px;
+    box-shadow: 10px 10px 15px -10px rgba(0, 0, 0, 0.05), -10px 10px 15px -10px rgba(0, 0, 0, 0.05);
 }
 
 /* Header Content Styling */
