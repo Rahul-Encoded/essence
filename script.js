@@ -224,8 +224,24 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
+    // Newsletter Form Logic
+    const initNewsletterForm = () => {
+        const newsletterForm = document.querySelector('.newsletter-form');
+        if (newsletterForm) {
+            newsletterForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const emailInput = newsletterForm.querySelector('input[type="email"]');
+                if (emailInput && emailInput.value) {
+                    alert(`Thank you for subscribing with: ${emailInput.value}`);
+                    emailInput.value = '';
+                }
+            });
+        }
+    };
+
     initCollectionAccordion();
     initProductDetails();
+    initNewsletterForm();
 
     // Initialize Lucide Icons
     if (typeof lucide !== 'undefined') {
