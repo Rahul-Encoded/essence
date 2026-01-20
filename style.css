@@ -368,8 +368,9 @@ img {
     display: flex;
     justify-content: center;
     align-items: center;
-    aspect-ratio: 1/1;
+    aspect-ratio: 610 / 673;
     overflow: hidden;
+    width: 100%;
 }
 
 .main-product-img {
@@ -381,7 +382,7 @@ img {
 
 .gallery-nav {
     position: absolute;
-    bottom: 2rem;
+    bottom: 1.2rem;
     background: transparent;
     border: 1px solid #4b5563;
     width: 44px;
@@ -407,7 +408,7 @@ img {
 
 .pagination-dots {
     position: absolute;
-    bottom: 2rem;
+    bottom: 1.2rem;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
